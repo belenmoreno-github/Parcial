@@ -17,6 +17,9 @@ const getById = id => document.getElementById(id);
       .replace(/[^a-zñáéíóú0-9 \.,;:()¿?¡!“”❝❞«»❛❜'‘’\-_]+/igm, "") // Only letters, digits & punctuation 
       .replace(/[ ]+/gm, " ")                                       // Remove extra blanks
 
+
+//CONTADOR
+
 //contador de caracteres
   const char_array = (text) => 
     clean_string(text)
@@ -25,13 +28,13 @@ const getById = id => document.getElementById(id);
       .filter((w) => (w!==""))         // remove empty string elem
 
 
-  // TODO
 //contador de palabras
   const word_array = (text) =>
     clean_string(text)
         .replace(/[0-9.,:;?!¿¡]+/igm, "") // leave only letters
         .split(" ")                       // generate array
         .filter((w) => (w!==""))
+
 
 //contador de frases
   const sentence_array = (text) =>
@@ -40,9 +43,11 @@ const getById = id => document.getElementById(id);
     .split("+")
     .filter((w) => (w!==""))          // remove empty string elem
     .map((s) => (s.replace(/^[ 0-9]+(.*$)/, "$1"))) // remove empty string elem
-    
 
-// repeticiones 
+
+//REPETICIONES
+
+// repeticiones contador
   const repetitions = (ordered_array) => 
     ordered_array
       .reduce(
@@ -65,6 +70,7 @@ const getById = id => document.getElementById(id);
     
     view.innerHTML = result;
   };
+
 
 // repeticiones de caracteres
 
@@ -122,7 +128,8 @@ const getById = id => document.getElementById(id);
     view.innerHTML = result;
   };
 
-  
+
+//BUSQUEDA
 
 //buscar letras
   const search_letters = () => {
@@ -147,6 +154,22 @@ const getById = id => document.getElementById(id);
 //buscar palabras
 
   const search_words = () => {
+    let {text, view, search} = getIO();
+
+    let ordered_words = 
+      word_array(text)
+        .map(el => el.toLowerCase())
+        .filter(el => el.includes(search.toLowerCase()))
+        .sort();
+
+    let result = `Hay ${ordered_words.length} palabras que contienen '${search}'.\n\n`
+
+    result +=
+      repetitions(ordered_words)      
+        .map(el => `${el.n} repeticiones de:  ${el.s}`)  
+        .join("\n");                    
+
+    view.innerHTML = result;
   };
 
 //buscar frases
