@@ -1,6 +1,6 @@
 
 html {
-    background-color: rgb(196, 197, 255);
+    background-color: rgb(202, 216, 255);
     text-align: center;
 }
 
@@ -8,6 +8,8 @@ html {
 button {
     color:rgb(0, 0, 0);
     font-weight: bold;
+    border-radius: 15px;
+    background-color:rgb(252, 255, 96);
 }
 
 
