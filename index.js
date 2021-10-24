@@ -23,15 +23,22 @@ const getById = id => document.getElementById(id);
       .split("")                       // generate array
       .filter((w) => (w!==""))         // remove empty string elem
 
+
   // TODO
-  const word_array = (text) => []
+  const word_array = (text) =>
+    clean_string(text)
+        .replace(/[0-9.,:;?!¿¡]+/igm, "") // leave only letters
+        .split(" ")                       // generate array
+        .filter((w) => (w!==""))
+
 
   const sentence_array = (text) =>
-      clean_string(text)     
-      .replace(/([\.:;?!\n]+)/gm, "$1+")
-      .split("+")
-      .filter((w) => (w!==""))          // remove empty string elem
-      .map((s) => (s.replace(/^[ 0-9]+(.*$)/, "$1"))) // remove empty string elem
+  clean_string(text)     
+    .replace(/([\.:;?!\n]+)/gm, "$1+")
+    .split("+")
+    .filter((w) => (w!==""))          // remove empty string elem
+    .map((s) => (s.replace(/^[ 0-9]+(.*$)/, "$1"))) // remove empty string elem
+    
 
   const repetitions = (ordered_array) => 
     ordered_array
@@ -49,7 +56,7 @@ const getById = id => document.getElementById(id);
     let {text, view} = getIO();
 
     let result =  `Caracteres: ${char_array(text).length}\n`; 
-        result += `Palabras: ${"No implementado"/*TO DO*/}\n`;
+        result += `Palabras: ${word_array(text).length}\n`;
         result += `Frases: ${sentence_array(text).length}\n`;
         result += `Lineas: ${text.split("\n").length}\n`;
     
