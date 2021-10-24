@@ -17,6 +17,7 @@ const getById = id => document.getElementById(id);
       .replace(/[^a-zñáéíóú0-9 \.,;:()¿?¡!“”❝❞«»❛❜'‘’\-_]+/igm, "") // Only letters, digits & punctuation 
       .replace(/[ ]+/gm, " ")                                       // Remove extra blanks
 
+//contador de caracteres
   const char_array = (text) => 
     clean_string(text)
       .replace(/[^a-zñáéíóú]+/igm, "") // leave only letters
@@ -25,21 +26,23 @@ const getById = id => document.getElementById(id);
 
 
   // TODO
+//contador de palabras
   const word_array = (text) =>
     clean_string(text)
         .replace(/[0-9.,:;?!¿¡]+/igm, "") // leave only letters
         .split(" ")                       // generate array
         .filter((w) => (w!==""))
 
-
+//contador de frases
   const sentence_array = (text) =>
   clean_string(text)     
-    .replace(/([\.:;?!\n]+)/gm, "$1+")
+    .replace(/([\.:;?!\n]+)/igm, "$1+")
     .split("+")
     .filter((w) => (w!==""))          // remove empty string elem
     .map((s) => (s.replace(/^[ 0-9]+(.*$)/, "$1"))) // remove empty string elem
     
 
+// repeticiones 
   const repetitions = (ordered_array) => 
     ordered_array
       .reduce(
@@ -63,6 +66,8 @@ const getById = id => document.getElementById(id);
     view.innerHTML = result;
   };
 
+// repeticiones de caracteres
+
   const letter_index = () => {
     let {text, view} = getIO();
 
@@ -79,9 +84,27 @@ const getById = id => document.getElementById(id);
     view.innerHTML = result;
   };
 
-  // TODO
+  
+  // repeticiones de palabras
+
   const word_index = () => {
+    let {text, view} = getIO();
+
+    let ordered_words = 
+        word_array(text)
+        .map(el => el.toLowerCase())
+        .sort();
+
+    let result = 
+      repetitions(ordered_words)
+      .map(el => `${el.s}: ${el.n}`)
+      .join("\n");
+
+    view.innerHTML = result;
   };
+
+
+  // repeticiones de frases
 
   const sentence_index = () => {
     let {text, view} = getIO();
@@ -90,6 +113,7 @@ const getById = id => document.getElementById(id);
       sentence_array(text)
       .map(el => el.toLowerCase())
       .sort();
+    
     let result = 
       repetitions(ordered_sentences)
       .map(el => `${el.s}: ${el.n}`)
@@ -97,7 +121,10 @@ const getById = id => document.getElementById(id);
 
     view.innerHTML = result;
   };
-   
+
+  
+
+//buscar letras
   const search_letters = () => {
     let {text, view, search} = getIO();
 
@@ -117,9 +144,12 @@ const getById = id => document.getElementById(id);
     view.innerHTML = result;
   };
 
-  // TODO
+//buscar palabras
+
   const search_words = () => {
   };
+
+//buscar frases
 
   const search_sentences = () => {
     let {text, view, search} = getIO();
